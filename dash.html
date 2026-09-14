@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+<script src="https://www.gstatic.com/firebasejs/12.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore-compat.js"></script>
+
+
+
+
+<script src="./api.js"></script>
+
+
+</head>
+<body>
+
+
+       <style>
+        body { font-family: Arial; background: #eee; padding: 20px; }
+        .blog { background: white; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .blog h3 { margin: 0 0 5px; color: #a83879; }
+        .blog p { margin: 0; color: #555; }
+        button { padding: 8px 15px; background: red; color: white; border: none; border-radius: 5px; }
+    </style>
+
+
+
+
+
+    <h2>📖 Blogs</h2>
+
+    <div id="blogsList">Loading...</div>
+
+    
+
+    <script>
+        
+         firebase.auth().onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = "./login.html";
+            } else {
+                loadBlogs();
+            }
+        });
+
+
+
+
+      
+
+  
+               function loadBlogs() {
+            
+            db.collection("blogs").get().then((mydata) => {
+
+                let html = "";
+
+                mydata.forEach((doc) => {
+
+                    let b = doc.data();
+                    
+                    html += `<div class="blog">
+                                <h3>${b.title}</h3>
+                                <p>${b.content}</p>
+                             </div>`;
+                             
+                });
+
+                document.getElementById("blogsList").innerHTML = html;
+            });
+        }
+        
+
+    </script>
+
+
+
+
+
+    
+</body>
+</html>
