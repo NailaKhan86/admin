@@ -13,8 +13,14 @@ function userregister(){
   .then((userCredential) => {
     // Signed in
     var user = userCredential.user;
-    alert('user valid')
-    window.location.href = './dash.html'
+
+
+     if (user.email === ADMIN_EMAIL) {
+                window.location.href = './adminaddblog.html';   // Admin page
+            } else {
+                window.location.href = './dash.html';      // User page
+            }
+
     // ...
   })
   .catch((error) => {
